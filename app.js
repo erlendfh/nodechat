@@ -39,8 +39,15 @@ app.get('/', function(req, res){
 
 // Socket.IO
 var socket = io.listen(app);
+var buffer = [];
 socket.on('connection', function(client) {
-  client.on('message', function() {});
+  client.on('message', function(data) {
+    if ('message' in data) {
+      var msg = {message: {userId: client.sessionId, text: data.message}};
+      buffer.push(msg);
+      client.broadcast(msg);
+    }
+  });
   client.on('disconnect', function() {});
 });
 
