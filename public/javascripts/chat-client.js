@@ -4,6 +4,11 @@ $(function () {
   socket.on('message', function(data){
     if ('message' in data) {
       printMessage(data.message);
+    } else if ('buffer' in data) {
+      $("#chatlog").html("");
+      $(data.buffer).each(function () {
+        printMessage(this);
+      });
     }
   });
   socket.on('disconnect', function(){});

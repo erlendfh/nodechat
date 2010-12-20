@@ -41,13 +41,16 @@ app.get('/', function(req, res){
 var socket = io.listen(app);
 var buffer = [];
 socket.on('connection', function(client) {
+  client.send({buffer: buffer});
+  
   client.on('message', function(data) {
     if ('message' in data) {
-      var msg = {message: {userId: client.sessionId, text: data.message}};
+      var msg = {userId: client.sessionId, text: data.message};
       buffer.push(msg);
-      client.broadcast(msg);
+      client.broadcast({message: msg});
     }
   });
+  
   client.on('disconnect', function() {});
 });
 
