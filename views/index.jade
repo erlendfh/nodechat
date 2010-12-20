@@ -2,6 +2,8 @@ h1 node.js chat
 
 div#chatlog
 
-input#message
+form#message-form
+  input#message
+  input(type="submit", value="Send")
 
-input(type="submit", value="Send")
+script(src="/javascripts/chat-client.js", type="text/javascript")
