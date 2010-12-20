@@ -1,4 +1,20 @@
 body {
-  padding: 50px;
+  padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+#chatlog {
+  margin: 10px 0;
+}
+
+#chatlog > div {
+  padding: 3px;
+}
+
+#chatlog div:nth-child(2n+1) {
+    background: none repeat scroll 0 0 #F6F6F6;
+}
+
+#message-form input {
+  font-size: 18px;
+  margin-right: 10px;
 }
