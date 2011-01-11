@@ -5,6 +5,8 @@
 
 var express = require('express');
 var io = require('socket.io');
+var fs = require('fs');
+var coffee = require('coffee-script');
 
 var app = module.exports = express.createServer();
 
@@ -54,6 +56,24 @@ socket.on('connection', function(client) {
   client.on('disconnect', function() {});
 });
 
+app.get('/javascripts/:script.coffee', function (req, res) {
+  fs.readFile('./public/javascripts/'+ req.params.script + '.coffee', 'utf-8', function (err, data) {
+    if (err) {
+      res.writeHead(500);
+      res.end(err.message);
+    } else {
+      try {
+        var script = coffee.compile(data);
+        res.contentType('text/javascript');
+        res.writeHead(200);
+        res.end(script);
+      } catch (e) {
+        res.writeHead(500);
+        res.end(e.message);
+      }
+    }
+  });
+});
 
 
 // Only listen on $ node app.js
